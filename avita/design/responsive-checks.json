@@ -1,0 +1,214 @@
+{
+  "pages": [
+    {
+      "width": 320,
+      "route": "/",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Digital\nproducts.\nBuilt properly.",
+      "headings": 1
+    },
+    {
+      "width": 320,
+      "route": "/about",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Small team.\nSerious\nengineering.",
+      "headings": 1
+    },
+    {
+      "width": 320,
+      "route": "/services",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Technology services\nfor a digital world.",
+      "headings": 1
+    },
+    {
+      "width": 320,
+      "route": "/projects",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Projects that\ncreate impact.",
+      "headings": 1
+    },
+    {
+      "width": 320,
+      "route": "/contact",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Let’s build\nsomething\nuseful.",
+      "headings": 1
+    },
+    {
+      "width": 390,
+      "route": "/",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Digital\nproducts.\nBuilt properly.",
+      "headings": 1
+    },
+    {
+      "width": 390,
+      "route": "/about",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Small team.\nSerious\nengineering.",
+      "headings": 1
+    },
+    {
+      "width": 390,
+      "route": "/services",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Technology services\nfor a digital world.",
+      "headings": 1
+    },
+    {
+      "width": 390,
+      "route": "/projects",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Projects that\ncreate impact.",
+      "headings": 1
+    },
+    {
+      "width": 390,
+      "route": "/contact",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Let’s build\nsomething\nuseful.",
+      "headings": 1
+    },
+    {
+      "width": 768,
+      "route": "/",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Digital\nproducts.\nBuilt properly.",
+      "headings": 1
+    },
+    {
+      "width": 768,
+      "route": "/about",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Small team.\nSerious\nengineering.",
+      "headings": 1
+    },
+    {
+      "width": 768,
+      "route": "/services",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Technology services\nfor a digital world.",
+      "headings": 1
+    },
+    {
+      "width": 768,
+      "route": "/projects",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Projects that\ncreate impact.",
+      "headings": 1
+    },
+    {
+      "width": 768,
+      "route": "/contact",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Let’s build\nsomething\nuseful.",
+      "headings": 1
+    },
+    {
+      "width": 1440,
+      "route": "/",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Digital\nproducts.\nBuilt properly.",
+      "headings": 1
+    },
+    {
+      "width": 1440,
+      "route": "/about",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Small team.\nSerious\nengineering.",
+      "headings": 1
+    },
+    {
+      "width": 1440,
+      "route": "/services",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Technology services\nfor a digital world.",
+      "headings": 1
+    },
+    {
+      "width": 1440,
+      "route": "/projects",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Projects that\ncreate impact.",
+      "headings": 1
+    },
+    {
+      "width": 1440,
+      "route": "/contact",
+      "status": 200,
+      "overflow": false,
+      "brokenImages": [],
+      "heading": "Let’s build\nsomething\nuseful.",
+      "headings": 1
+    }
+  ],
+  "filters": [
+    {
+      "name": "All",
+      "count": 4
+    },
+    {
+      "name": "Web",
+      "count": 2
+    },
+    {
+      "name": "Mobile",
+      "count": 1
+    },
+    {
+      "name": "Cloud",
+      "count": 2
+    },
+    {
+      "name": "Automation",
+      "count": 1
+    }
+  ],
+  "menu": true,
+  "intro": true,
+  "projectDialog": true,
+  "contactValidation": {
+    "emptyValid": false,
+    "filledValid": true
+  },
+  "errors": []
+}
