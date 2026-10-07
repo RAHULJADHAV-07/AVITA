@@ -146,64 +146,177 @@ function Home({ motion, toggleMotion }: { motion: boolean; toggleMotion: () => v
         <div className="hero-visual" ref={scene} aria-label="Interactive chrome sculpture">
           <div className="orbital-scene"><div className="orbit orbit-one" aria-hidden="true"><i /></div><div className="orbit orbit-two" aria-hidden="true"><i /></div>
             <div className="sculpture-parallax" data-parallax><img className="hero-sculpture" src="/artwork/hero-sculpture-v3.webp" alt="Floating liquid-chrome triangular sculpture with violet reflections" width="1254" height="1254" fetchPriority="high" loading="eager" /></div>
-            <span className="scene-coordinate scene-coordinate-top" aria-hidden="true">AV / 01<br />IDEAS INTO REALITY</span><span className="scene-coordinate scene-coordinate-bottom" aria-hidden="true"><Plus size={18} /> FORM. FUNCTION. FORWARD.</span>
+            <span className="scene-coordinate scene-coordinate-top" aria-hidden="true">AV / 01<br />IDEAS INTO REALITY</span>
           </div>
         </div>
       </div>
-      <div className="hero-bottom"><div className="hero-disciplines"><span>DESIGN</span><span>ENGINEERING</span><span>INTELLIGENCE</span></div>
-        <a href="#about" className="scroll-link"><span className="scroll-arrow"><ArrowDown size={17} /></span>SCROLL TO EXPLORE</a>
-        <button className="motion-toggle" aria-label={motion ? "Pause motion" : "Enable motion"} aria-pressed={!motion} onClick={toggleMotion}>{motion ? <Pause size={13} /> : <Play size={13} />}<span>{motion ? "MOTION ON" : "MOTION OFF"}</span></button>
+      <div className="hero-bottom"><ol className="hero-disciplines" aria-label="Disciplines">{["DESIGN", "ENGINEERING", "INTELLIGENCE"].map((discipline, index) => <li key={discipline}><span>0{index + 1}</span>{discipline}</li>)}</ol>
+        <a href="#about" className="scroll-link"><span className="scroll-arrow"><ArrowDown size={15} /></span><span>SCROLL TO EXPLORE</span></a>
+        <div className="hero-bottom-end"><span className="hero-tagline"><Plus size={12} aria-hidden="true" />FORM. FUNCTION. FORWARD.</span><button className="motion-toggle" aria-label={motion ? "Pause motion" : "Enable motion"} aria-pressed={!motion} onClick={toggleMotion}>{motion ? <Pause size={13} /> : <Play size={13} />}<span>{motion ? "MOTION ON" : "MOTION OFF"}</span></button></div>
       </div>
     </div>
     <div className="marquee" aria-label="Ideas, engineering, real impact"><div className="marquee-track" aria-hidden="true">{[0, 1, 2, 3].map(i => <div className="marquee-set" key={i}><span>IDEAS</span><Asterisk /><span className="outline-text">ENGINEERING</span><Asterisk /><span>REAL IMPACT</span><Asterisk /></div>)}</div></div>
   </section>;
 }
+const principles = [
+  { title: "Curiosity before assumptions", tag: "Understand", copy: "We ask questions, understand the people using your product and find the problem worth solving before deciding what to build." },
+  { title: "Design and engineering, together", tag: "Connect", copy: "We connect how a product feels with how it works. The interface, the architecture and the smallest interactions get the same attention." },
+  { title: "A shared journey", tag: "Collaborate", copy: "We make space for honest conversations, clear decisions and feedback as the work takes shape. Your idea stays at the centre of the process." },
+];
+function Principles() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused) return;
+    const timer = window.setTimeout(() => {
+      if (document.documentElement.dataset.motion === "on") setActive(index => (index + 1) % principles.length);
+    }, 6500);
+    return () => window.clearTimeout(timer);
+  }, [active, paused]);
+  const principle = principles[active];
+  return <div className="studio-principles reveal" onPointerEnter={() => setPaused(true)} onPointerLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={() => setPaused(false)}>
+    <Asterisk className="principles-star" size={340} strokeWidth={.6} aria-hidden="true" />
+    <div className="studio-principles-heading">
+      <p className="eyebrow">WHAT GUIDES US</p><h3>Care in every <span className="serif-word">detail.</span></h3>
+      <div className="principle-stage" id="principle-panel" role="tabpanel" aria-labelledby={`principle-tab-${active}`} key={active}>
+        <span className="principle-big-number" aria-hidden="true">0{active + 1}</span>
+        <div><p className="principle-tag">{principle.tag.toUpperCase()}</p><p className="principle-copy">{principle.copy}</p></div>
+      </div>
+      <div className="studio-belief"><Asterisk size={22} aria-hidden="true" /><p>Small by choice. Ambitious by nature.</p></div>
+    </div>
+    <div className="studio-principle-list" role="tablist" aria-label="Our principles">{principles.map((item, index) => <button type="button" role="tab" id={`principle-tab-${index}`} aria-selected={active === index} aria-controls="principle-panel" className={`studio-principle ${active === index ? "is-active" : ""}`} key={item.title} onClick={() => setActive(index)} onPointerEnter={() => setActive(index)}>
+      <span className="studio-principle-number">0{index + 1}</span><span className="studio-principle-title">{item.title}</span><ArrowUpRight size={22} aria-hidden="true" />
+      <span className="studio-principle-progress" aria-hidden="true"><i className={paused ? "is-paused" : ""} /></span>
+    </button>)}</div>
+  </div>;
+}
 function About() {
   return <section id="about" className="about-section light-section" data-theme="light" aria-labelledby="about-title">
     <div className="container">
       <div className="studio-section-top"><SectionLabel number="01">THE STUDIO</SectionLabel><span className="eyebrow studio-side-note">INDEPENDENT BY DESIGN</span></div>
-      <div className="about-layout reveal">
-        <h2 id="about-title"><span className="studio-title-line">Small team.</span><span className="studio-title-line">Big thinking.</span><span className="studio-title-line studio-title-accent">Serious execution.</span></h2>
-        <div className="about-story">
-          <p className="large-copy">Good ideas deserve <br />exceptional engineering.</p>
-          <p className="body-copy">We’re AVITA TECHNOLOGIES. An independent technology studio building useful digital products, scalable platforms and smarter ways of working.</p>
-          <p className="body-copy">From the first sketch to the final line of code, we bring curiosity, craft and a shared belief in building things properly.</p>
-          <a className="text-link" href="#services">Explore our capabilities<ArrowUpRight size={20} aria-hidden="true" /></a>
+      <div className="studio-hero">
+        <div className="about-layout reveal">
+          <h2 id="about-title"><span className="studio-title-line">Small team.</span><span className="studio-title-line">Big thinking.</span><span className="studio-title-line studio-title-accent">Serious execution.<svg className="studio-swoosh" viewBox="0 0 600 30" preserveAspectRatio="none" aria-hidden="true"><path d="M4 21C120 7 262 3 382 11s176 13 214 1" pathLength="1" /></svg></span></h2>
+          <div className="about-story">
+            <p className="large-copy">Good ideas deserve exceptional engineering.</p>
+            <p className="body-copy">We’re AVITA TECHNOLOGIES. An independent technology studio building useful digital products, scalable platforms and smarter ways of working.</p>
+            <p className="body-copy">From the first sketch to the final line of code, we bring curiosity, craft and a shared belief in building things properly.</p>
+            <a className="text-link" href="#services">Explore our capabilities<ArrowUpRight size={20} aria-hidden="true" /></a>
+          </div>
         </div>
+        <figure className="studio-image-block reveal">
+          <div className="studio-banner"><img src="/artwork/about-studio.webp" alt="Architectural visualization of a warmly lit creative workspace, with a shared table and plants" width="1536" height="1024" loading="lazy" decoding="async" data-parallax />
+            <figcaption className="studio-image-caption"><small className="eyebrow">ROOM FOR BIG IDEAS</small><strong>A shared ambition.</strong></figcaption>
+          </div>
+          <div className="studio-badge" aria-hidden="true">
+            <svg viewBox="0 0 120 120"><defs><path id="studio-badge-path" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0" /></defs><text><textPath href="#studio-badge-path">INDEPENDENT BY DESIGN • SMALL BY CHOICE • </textPath></text></svg>
+            <span><Asterisk size={26} strokeWidth={1.6} /></span>
+          </div>
+          <aside className="studio-people" aria-labelledby="people-title">
+            <h3 id="people-title" className="eyebrow"><span />THE PEOPLE BEHIND THE IDEAS</h3>
+            <ul className="founder-list">{[{ initials: "SMK", name: "Swatantra Mahavir Kashiwal" }, { initials: "RDJ", name: "Rahul Devsingh Jadhav" }].map((founder, index) => <li className="founder" key={founder.initials}>
+              <span className="founder-initials" aria-hidden="true"><span>{founder.initials}</span></span><div><p className="founder-role">CO-FOUNDER</p><h4>{founder.name}</h4></div><span className="founder-index" aria-hidden="true">0{index + 1}</span>
+            </li>)}</ul>
+          </aside>
+        </figure>
       </div>
-      <figure className="studio-image-block reveal">
-        <div className="studio-banner"><img src="/artwork/about-studio.webp" alt="Architectural visualization of a warmly lit creative workspace, with a shared table and plants" width="1536" height="1024" loading="lazy" decoding="async" data-parallax />
-          <div className="studio-image-caption"><span><small className="eyebrow">ROOM FOR BIG IDEAS</small><strong>A shared ambition.</strong></span><Asterisk size={48} strokeWidth={1.2} aria-hidden="true" /></div>
-        </div>
-        <figcaption className="studio-image-meta"><span>STUDIO ATMOSPHERE / A VISUAL EXPLORATION</span><span>AVITA TECHNOLOGIES</span></figcaption>
-      </figure>
-      <div className="about-lower">
-        <div className="studio-team-heading reveal"><p className="eyebrow">THE PEOPLE</p><h3>The people behind<br />the ideas.</h3><div className="studio-belief"><Asterisk size={32} aria-hidden="true" /><p>Small by choice.<br />Ambitious by nature.</p></div></div>
-        <div className="founder-grid">{[{ initials: "SMK", name: "Swatantra Mahavir Kashiwal" }, { initials: "RDJ", name: "Rahul Devsingh Jadhav" }].map((founder, index) => <article className="founder reveal" key={founder.initials}>
-          <span className="founder-initials" aria-hidden="true">{founder.initials}</span><div><p className="founder-role">CO-FOUNDER / 0{index + 1}</p><h4>{founder.name}</h4></div>
-        </article>)}</div>
-      </div>
-      <div className="studio-principles reveal"><div className="studio-principles-heading"><p className="eyebrow">WHAT GUIDES US</p><h3>Care in every detail.</h3></div><div className="studio-principle-list">
-        {[
-          { title: "Curiosity before assumptions", copy: "We ask questions, understand the people using your product and find the problem worth solving before deciding what to build." },
-          { title: "Design and engineering, together", copy: "We connect how a product feels with how it works. The interface, the architecture and the smallest interactions get the same attention." },
-          { title: "A shared journey", copy: "We make space for honest conversations, clear decisions and feedback as the work takes shape. Your idea stays at the centre of the process." },
-        ].map((principle, index) => <details className="studio-principle" key={principle.title}><summary><span className="studio-principle-number" aria-hidden="true">0{index + 1}</span><span>{principle.title}</span><Plus size={20} aria-hidden="true" /></summary><p>{principle.copy}</p></details>)}
-      </div>
-      </div>
+      <Principles />
     </div>
   </section>;
 }
 function Services({ selectService }: { selectService: (service: string) => void }) {
   const [active, setActive] = useState(0);
-  const Icon = services[active].icon;
+  const [spun, setSpun] = useState(false);
+  const stage = useRef<HTMLDivElement>(null);
+  const ring = useRef<HTMLDivElement>(null);
+  const cards = useRef<(HTMLButtonElement | null)[]>([]);
+  const physics = useRef({ angle: 0, target: 0, velocity: 0, dragging: false, lastX: 0, moved: 0, hover: false, visible: false });
+  const step = 360 / services.length;
+  useEffect(() => {
+    let frame = 0, last = performance.now(), shown = -1;
+    const tick = (now: number) => {
+      const p = physics.current, dt = Math.min(now - last, 50) / 16.67, smooth = document.documentElement.dataset.motion === "on";
+      last = now;
+      if (!p.dragging) {
+        if (Math.abs(p.velocity) > .08 && smooth) {
+          p.angle += p.velocity * dt; p.velocity *= Math.pow(.94, dt);
+          if (Math.abs(p.velocity) <= .08) { p.velocity = 0; p.target = Math.round(p.angle / step) * step; }
+        } else { p.velocity = 0; p.angle += (p.target - p.angle) * (smooth ? Math.min(1, .085 * dt) : 1); }
+      }
+      if (ring.current) ring.current.style.transform = `translateZ(calc(var(--ring-r) * -1)) rotateX(-9deg) rotateY(${p.angle}deg)`;
+      cards.current.forEach((card, index) => card?.style.setProperty("--face", ((Math.cos((index * step + p.angle) * Math.PI / 180) + 1) / 2).toFixed(3)));
+      const front = ((Math.round(-p.angle / step) % services.length) + services.length) % services.length;
+      if (front !== shown) { shown = front; setActive(front); }
+      frame = p.visible ? requestAnimationFrame(tick) : 0;
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      physics.current.visible = entry.isIntersecting;
+      if (entry.isIntersecting && !frame) { last = performance.now(); frame = requestAnimationFrame(tick); }
+    });
+    if (stage.current) observer.observe(stage.current);
+    const auto = window.setInterval(() => {
+      const p = physics.current;
+      if (p.visible && !p.hover && !p.dragging && p.velocity === 0 && document.documentElement.dataset.motion === "on") p.target -= step;
+    }, 3600);
+    tick(performance.now());
+    return () => { cancelAnimationFrame(frame); observer.disconnect(); window.clearInterval(auto); };
+  }, [step]);
+  function goTo(index: number) {
+    const p = physics.current;
+    p.velocity = 0;
+    p.target = p.angle + ((((-index * step - p.angle) % 360) + 540) % 360 - 180);
+  }
+  function nudge(direction: number) { const p = physics.current; p.velocity = 0; p.target = Math.round(p.angle / step) * step - direction * step; }
+  function down(event: PointerEvent<HTMLDivElement>) {
+    const p = physics.current;
+    p.dragging = true; p.lastX = event.clientX; p.moved = 0; p.velocity = 0;
+  }
+  function move(event: PointerEvent<HTMLDivElement>) {
+    const p = physics.current;
+    if (!p.dragging) return;
+    const delta = (event.clientX - p.lastX) * .32;
+    p.lastX = event.clientX; p.moved += Math.abs(delta); p.angle += delta; p.velocity = delta;
+    if (p.moved > 6 && !stage.current?.hasPointerCapture(event.pointerId)) { stage.current?.setPointerCapture(event.pointerId); setSpun(true); }
+  }
+  function up() {
+    const p = physics.current;
+    if (!p.dragging) return;
+    p.dragging = false;
+    if (Math.abs(p.velocity) <= .08) p.target = Math.round(p.angle / step) * step;
+  }
+  const service = services[active];
+  const ActiveIcon = service.icon;
   return <section id="services" className="services-section light-section" data-theme="light" aria-labelledby="services-title"><div className="container">
-    <SectionLabel number="02">OUR CAPABILITIES</SectionLabel>
-    <div className="services-heading reveal"><h2 id="services-title">From <span className="serif-word">what if</span><br />to what’s next.</h2><p className="body-copy">The right mix of strategy, design and technology.<br />Built around your next big move.</p></div>
-    <div className="services-layout"><aside className="services-aside"><div className="capability-art" aria-hidden="true"><div className="capability-ring" /><div className="capability-ring ring-secondary" /><div className="capability-core"><Icon size={62} strokeWidth={1} /></div><span className="capability-dot" /></div><p className="eyebrow">THINK. BUILD. REFINE.</p><p className="capability-detail" aria-live="off">{services[active].detail}</p><span className="capability-index">0{active + 1} / 06</span></aside>
-      <div className="service-list">{services.map(({ title, text }, index) => <a href="#contact" className={`service-row reveal ${active === index ? "service-active" : ""}`} key={title} onPointerEnter={() => setActive(index)} onFocus={() => setActive(index)} onClick={() => selectService(title)}>
-        <span className="service-number">0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div><span className="service-arrow"><ArrowUpRight size={26} aria-hidden="true" /></span>
-      </a>)}</div>
+    <div className="services-top"><SectionLabel number="02">OUR CAPABILITIES</SectionLabel><span className="eyebrow services-count">06 DISCIPLINES / ONE TEAM</span></div>
+    <div className="services-heading reveal"><h2 id="services-title">From <span className="serif-word">what if</span><br />to what’s next.</h2><div className="services-intro"><p className="body-copy">The right mix of strategy, design and technology. Built around your next big move.</p><a href="#contact" className="services-intro-link">Not sure where to start? <strong>Let’s talk</strong><ArrowUpRight size={16} aria-hidden="true" /></a></div></div>
+    <div className="service-stage reveal" ref={stage} role="region" aria-roledescription="carousel" aria-label="Our services" tabIndex={0}
+      onKeyDown={event => { if (event.key === "ArrowRight") { event.preventDefault(); nudge(1); } if (event.key === "ArrowLeft") { event.preventDefault(); nudge(-1); } }}
+      onPointerEnter={() => { physics.current.hover = true; }} onPointerLeave={() => { physics.current.hover = false; up(); }}
+      onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
+      <div className="service-details" aria-live="polite" key={active}>
+        <p className="eyebrow">CAPABILITY 0{active + 1} / 06</p>
+        <span className="service-details-icon" aria-hidden="true"><ActiveIcon size={22} strokeWidth={1.6} /></span>
+        <h3>{service.title}</h3>
+        <p className="service-details-text">{service.text}</p>
+        <p className="service-details-note">{service.detail}</p>
+        <a href="#contact" className="service-cta" onClick={() => selectService(service.title)}>Start a project<span><ArrowUpRight size={18} aria-hidden="true" /></span></a>
+      </div>
+      <div className="service-ring-wrap">
+        <div className="service-ring" ref={ring}>
+          <span className="service-ring-floor" aria-hidden="true" />
+          {services.map(({ title, icon: Icon }, index) => <button type="button" className={`service-card ${active === index ? "is-front" : ""}`} key={title} ref={element => { cards.current[index] = element; }} style={{ "--i": index } as CSSProperties} tabIndex={-1} aria-label={`Show ${title}`} onClick={() => { if (physics.current.moved < 6) goTo(index); }}>
+            <span className="service-card-top"><span>0{index + 1}</span><ArrowUpRight size={16} aria-hidden="true" /></span>
+            <span className="service-card-orb" aria-hidden="true"><Icon size={34} strokeWidth={1.3} /></span>
+            <strong>{title}</strong>
+          </button>)}
+        </div>
+        <p className={`service-hint ${spun ? "is-hidden" : ""}`} aria-hidden="true"><span>←</span> DRAG TO SPIN <span>→</span></p>
+      </div>
+      <div className="service-controls">
+        <button type="button" aria-label="Previous service" onClick={() => nudge(-1)}><ArrowRight size={18} style={{ transform: "rotate(180deg)" }} aria-hidden="true" /></button>
+        <div className="service-dots" aria-hidden="true">{services.map((item, index) => <i className={active === index ? "is-active" : ""} key={item.title} />)}</div>
+        <button type="button" aria-label="Next service" onClick={() => nudge(1)}><ArrowRight size={18} aria-hidden="true" /></button>
+      </div>
     </div>
   </div></section>;
 }
