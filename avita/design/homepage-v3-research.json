@@ -1,0 +1,57 @@
+{
+  "version": "homepage-v3",
+  "brief": "Replace the restrained boxed layout with a wide, expressive animated technology studio homepage.",
+  "research": [
+    {
+      "source": "Studio Freight",
+      "url": "https://studiofreight.com/",
+      "evidence": "Inspected the live homepage in Chrome.",
+      "takeaway": "Use the viewport as a composition rather than centering a narrow collection of cards. Let typography and deliberately placed visuals provide hierarchy."
+    },
+    {
+      "source": "Locomotive",
+      "url": "https://locomotive.ca/en",
+      "evidence": "Read the official site structure and positioning; the Chrome visit encountered its verification page.",
+      "takeaway": "Keep the studio story, capabilities, work and contact obvious while presenting a distinct creative identity."
+    },
+    {
+      "source": "Active Theory",
+      "url": "https://activetheory.net/",
+      "evidence": "Official site checked; its WebGL presentation did not render in the headless research browser.",
+      "takeaway": "A reference for an immersive digital-experience direction, not a copied layout or verified screenshot."
+    },
+    {
+      "source": "MDN Intersection Observer",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API",
+      "takeaway": "Observe visibility for reveal sequences and suspend the animated canvas outside the viewport."
+    },
+    {
+      "source": "MDN prefers-reduced-motion",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion",
+      "takeaway": "Start with a static composition when reduced motion is requested. Provide an explicit motion control."
+    },
+    {
+      "source": "GSAP matchMedia documentation",
+      "url": "https://gsap.com/docs/v3/GSAP/gsap.matchMedia()",
+      "takeaway": "Match motion behavior to viewport and preferences. This implementation uses native browser APIs and CSS without adding GSAP."
+    }
+  ],
+  "decisions": {
+    "layout": "Fluid desktop gutters of 3.1vw, capped at 72px; no narrow 1320px desktop cap. Open centered navigation, oversized split hero headline, borderless transparent art.",
+    "palette": "Charcoal, warm off-white, lavender; colored product artboards provide variety.",
+    "typography": "Self-hosted Space Grotesk and Manrope; italic serif accents add contrast.",
+    "imagery": "New isolated chrome sculpture integrates with the hero atmosphere. Existing studio scene becomes a panoramic image. Generic project photos are replaced with code-native product previews, identified as concept explorations.",
+    "motion": "Staggered headline entrance, floating sculpture, pointer-driven perspective, orbital motion, star canvas, continuous type strip, scroll reveals, subtle parallax, magnetic CTA movement and animated workflow paths.",
+    "mobile": "Hero becomes a stacked composition at 700px. Navigation becomes a sheet at 960px. Project previews and contact content stack. Motion remains optional.",
+    "content": "Preserve supplied founders, services, contact destinations and mailto submission. Do not invent clients, testimonials or results."
+  },
+  "asset": {
+    "tool": "Built-in image_gen",
+    "prompt": "Use case: stylized-concept. Asset type: transparent isolated hero sculpture for AVITA Technologies, an ambitious digital engineering studio website. Create one exquisite photorealistic 3D abstract sculpture: a continuous folded flowing chrome ribbon that twists into a three-sided triangular infinity knot, an abstract A silhouette with an open hollow center, smooth rounded organically curved edges, luxurious polished liquid metal, contrasting dark reflective chrome, bright silver specular edges, with rich electric lavender and ultraviolet reflections glowing from within. This is a modern sculptural object, not a literal letter or logo, not a sharp crystalline prism. Dramatic studio lighting on the metallic curves, physically realistic reflections, sculptural gallery aesthetic, subtle iridescent violet blue and silver. Composition: isolated central object in a square canvas, oblique three-quarter view tilted dynamically toward viewer, object fills 85% of frame with all extremities inside frame and ample small safe margin. True transparent background with alpha; no floor, no stage, no rectangular backdrop, no room, no text, no letters, no watermark, no secondary objects, no shadow baked into opaque background. Extremely premium detailed CGI object suitable for a full-width charcoal-black website hero.",
+    "source": "assets/generated/homepage-v3/hero-sculpture.png",
+    "optimized": "public/artwork/hero-sculpture-v3.webp",
+    "dimensions": "1254 × 1254",
+    "alpha": true
+  },
+  "validation": "See homepage-v3-checks.json and previews/homepage-v3."
+}

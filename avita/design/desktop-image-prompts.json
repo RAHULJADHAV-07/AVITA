@@ -1,0 +1,71 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "name": "desktop-hero",
+      "prompt": "Generate a new standalone landscape image, 1536x1024 or 16:9. Art-directed premium technology studio AVITA visual identity: sharp architectural geometry, near-black navy, silver, electric blue with restrained violet, photorealistic cinematic CGI, impeccable physically realistic materials. Wide horizontal composition, whole subject in frame with breathing space. NO TEXT, letters, words, numbers, logos or watermarks. No collage or website screenshot. Use case: stylized-concept. Desktop hero artwork. Monumental angular silver and smoky-glass architectural structure on a pale reflective plaza. A sweeping low horizontal wing and striking triangular glass volume, blue and violet refracted light from the interior. Bright off-white environment contrasts deep navy facets. Wide low camera, full structure visible, gallery-quality architectural photograph, minimal sky, calm premium tone."
+    },
+    {
+      "name": "desktop-about",
+      "prompt": "Generate a new standalone landscape image, 1536x1024 or 16:9. Art-directed premium technology studio AVITA visual identity: sharp architectural geometry, near-black navy, silver, electric blue with restrained violet, photorealistic cinematic CGI, impeccable physically realistic materials. Wide horizontal composition, whole subject in frame with breathing space. NO TEXT, letters, words, numbers, logos or watermarks. No collage or website screenshot. Use case: photorealistic-natural. Wide cinematic photograph of a premium futuristic technology studio interior. Broad horizontal perspective through glass walls, minimalist long desks with thin dark monitors, graphite walls, architectural ceiling grid, subtle blue light and violet reflections, a few plants, restrained warm practical lighting. Unoccupied, no logos, no readable screens. Sophisticated engineering atelier."
+    },
+    {
+      "name": "desktop-services",
+      "prompt": "Generate a new standalone landscape image, 1536x1024 or 16:9. Art-directed premium technology studio AVITA visual identity: sharp architectural geometry, near-black navy, silver, electric blue with restrained violet, photorealistic cinematic CGI, impeccable physically realistic materials. Wide horizontal composition, whole subject in frame with breathing space. NO TEXT, letters, words, numbers, logos or watermarks. No collage or website screenshot. Use case: product-mockup. Thin graphite laptop, completely visible in wide frame, open on a dark sculptural architectural plinth, broad screen displays purely geometric blue and violet interface panels and line graphs with no text or digits. Deep navy studio environment, subtle glowing glass rails in distance, dramatic soft blue sidelight, elegant minimal product visualization."
+    },
+    {
+      "name": "desktop-project-platform",
+      "prompt": "Generate a new standalone landscape image, 1536x1024 or 16:9. Art-directed premium technology studio AVITA visual identity: sharp architectural geometry, near-black navy, silver, electric blue with restrained violet, photorealistic cinematic CGI, impeccable physically realistic materials. Wide horizontal composition, whole subject in frame with breathing space. NO TEXT, letters, words, numbers, logos or watermarks. No collage or website screenshot. Use case: product-mockup. Large floating desktop display and slim laptop on a broad dark reflective architectural platform. Both screens show a light white web application made only of precise blank geometric UI cards, violet blocks and blue bar charts, absolutely no readable text or numbers. Wide horizontal angle, whole devices visible. Black background, architectural bevels, controlled blue rim light. Premium digital-platform presentation."
+    },
+    {
+      "name": "desktop-project-web",
+      "prompt": "Generate a new standalone landscape image, 1536x1024 or 16:9. Art-directed premium technology studio AVITA visual identity: sharp architectural geometry, near-black navy, silver, electric blue with restrained violet, photorealistic cinematic CGI, impeccable physically realistic materials. Wide horizontal composition, whole subject in frame with breathing space. NO TEXT, letters, words, numbers, logos or watermarks. No collage or website screenshot. Use case: product-mockup. A thin black laptop and one black smartphone on layered silver and dark glass plinths, wide editorial product photograph. Screens show matching dark navy web interfaces, blue line graphs and violet geometric components, no words letters or digits. Strong horizontal composition, elegant silver reflections, cinematic dark environment with small violet glow."
+    },
+    {
+      "name": "desktop-project-automation",
+      "prompt": "Generate a new standalone landscape image, 1536x1024 or 16:9. Art-directed premium technology studio AVITA visual identity: sharp architectural geometry, near-black navy, silver, electric blue with restrained violet, photorealistic cinematic CGI, impeccable physically realistic materials. Wide horizontal composition, whole subject in frame with breathing space. NO TEXT, letters, words, numbers, logos or watermarks. No collage or website screenshot. Use case: stylized-concept. Wide horizontal abstract automation network in a deep black architectural space: suspended translucent glass square nodes connected by very thin blue light tracks in a coherent branching pattern, two violet nodes with simple white lightning symbols. Crisp elegant dimensional diagram, evenly distributed across a wide frame, dark reflective ground, no labels or text or numbers."
+    },
+    {
+      "name": "desktop-project-mobile",
+      "prompt": "Generate a new standalone landscape image, 1536x1024 or 16:9. Art-directed premium technology studio AVITA visual identity: sharp architectural geometry, near-black navy, silver, electric blue with restrained violet, photorealistic cinematic CGI, impeccable physically realistic materials. Wide horizontal composition, whole subject in frame with breathing space. NO TEXT, letters, words, numbers, logos or watermarks. No collage or website screenshot. Use case: product-mockup. Three realistic black smartphones in a wide landscape arrangement on low stepped dark navy architectural pedestals. Entire phones visible with breathing space, slightly different angles. Screens show minimal navy app interface using bright blue graph lines, violet blocks and white geometric shapes without text, numbers or letters. Controlled cyan rim light, dark cinematic background, premium engineering product photograph."
+    },
+    {
+      "name": "desktop-contact",
+      "prompt": "Generate a new standalone landscape image, 1536x1024 or 16:9. Art-directed premium technology studio AVITA visual identity: sharp architectural geometry, near-black navy, silver, electric blue with restrained violet, photorealistic cinematic CGI, impeccable physically realistic materials. Wide horizontal composition, whole subject in frame with breathing space. NO TEXT, letters, words, numbers, logos or watermarks. No collage or website screenshot. Use case: stylized-concept. Wide landscape architectural still life: low hollow triangular structure of polished silver edges and clear glass, with deep blue and violet internal reflections, beside an angular white architectural wall. Soft off-white minimal studio, pale reflective floor, wide architectural perspective, sharp geometric forms, generous empty space to left, entire structure visible."
+    }
+  ],
+  "sources": [
+    {
+      "name": "desktop-hero",
+      "path": "/home/rahul/.codex/generated_images/01a1153d-2caf-72d2-b458-d09c3b0677cc/exec-5ed95e83-fd69-4baa-858b-8aee1153fbb1.png"
+    },
+    {
+      "name": "desktop-about",
+      "path": "/home/rahul/.codex/generated_images/01a1153d-2caf-72d2-b458-d09c3b0677cc/exec-beea5da3-2ce0-40d8-ba3c-97af2d4bc282.png"
+    },
+    {
+      "name": "desktop-services",
+      "path": "/home/rahul/.codex/generated_images/01a1153d-2caf-72d2-b458-d09c3b0677cc/exec-4c32cdd4-2129-4bc3-8ace-647cf5605fd7.png"
+    },
+    {
+      "name": "desktop-project-platform",
+      "path": "/home/rahul/.codex/generated_images/01a1153d-2caf-72d2-b458-d09c3b0677cc/exec-970330a3-6514-4da1-9ce4-f2040829ad87.png"
+    },
+    {
+      "name": "desktop-project-web",
+      "path": "/home/rahul/.codex/generated_images/01a1153d-2caf-72d2-b458-d09c3b0677cc/exec-a3437507-95d5-4307-aed9-1f71b2507178.png"
+    },
+    {
+      "name": "desktop-project-automation",
+      "path": "/home/rahul/.codex/generated_images/01a1153d-2caf-72d2-b458-d09c3b0677cc/exec-416cdcd7-3270-4712-abba-e892dff73534.png"
+    },
+    {
+      "name": "desktop-project-mobile",
+      "path": "/home/rahul/.codex/generated_images/01a1153d-2caf-72d2-b458-d09c3b0677cc/exec-a02930e0-d6be-49f0-8ab9-f5e2438eb370.png"
+    },
+    {
+      "name": "desktop-contact",
+      "path": "/home/rahul/.codex/generated_images/01a1153d-2caf-72d2-b458-d09c3b0677cc/exec-6494c5b5-66f4-472c-a0b9-a144f155b9c4.png"
+    }
+  ]
+}

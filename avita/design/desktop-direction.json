@@ -1,0 +1,24 @@
+{
+  "intent": "Same AVITA identity, independent desktop composition. One continuous scrolling page.",
+  "contentWidth": "1320px maximum; 48px desktop margins, 32px tablet margins, 20px mobile margins (16px at 370px and below)",
+  "palette": {
+    "paper": "#fafafa",
+    "ink": "#090b10",
+    "navy": "#0b0e16",
+    "blue": "#0068ff",
+    "violet": "#9400ff"
+  },
+  "typography": "Modern sans serif; responsive 41\u201380px headlines, 15\u201317px body text, and 10\u201313px labels and navigation",
+  "compositions": {
+    "home": "Off-white split with aligned headline and framed prism image; balanced vertical padding, image caption, and fine taxonomy strip below",
+    "about": "Near-black asymmetric editorial layout; statement left, studio and introduction right; compact founders and horizontal process below",
+    "services": "Off-white editorial split; heading and landscape visual left, six numbered service rows right",
+    "work": "Dark curated portfolio; landscape feature with side metadata, three supporting landscape projects below",
+    "contact": "Off-white contact details and rounded form card with outlined inputs; landscape geometry and short brand statement below",
+    "footer": "Dark minimal brand, positioning, copyright and founder initials; no section navigation"
+  },
+  "responsive": "Navigation collapses at 960px. Below 760px, sections and portfolio stack; hero and services retain landscape artwork, and project information sits below images.",
+  "motion": "Small reveals, subtle image hover scale, native smooth scrolling; reduced motion respected",
+  "publication": "Local only. No hosting, deployment, GitHub push or repository creation.",
+  "imagery": "Reuse the exact approved landscape studio, project and contact images; expand the existing portrait hero and services scenes horizontally using direct image references, preserving their objects and visual design."
+}
