@@ -30,19 +30,12 @@ Navigation collapses into a sheet below 960px. The hero stacks below 700px; prod
 
 ## Files
 
-- `src/components/website.tsx`: content, native product previews, navigation, motion control, dialogs and contact form.
-- `src/components/motion.tsx`: canvas atmosphere, visibility-aware rendering, scroll progress, reveals and parallax.
-- `src/styles.css`: visual system, animation and responsive layout.
-- `public/artwork/hero-sculpture-v3.webp`: optimized hero artwork with transparency.
-- `assets/generated/homepage-v3/hero-sculpture.png`: generated original.
+- `src/components/website.tsx`: content, navigation, Studio, Work, Process, Contact and footer.
+- `src/components/services.tsx`: service cards with 3D particle icons and the full-screen 3D explorer.
+- `src/components/motion.tsx`: canvas atmosphere, scroll progress, replaying reveals and parallax.
+- `src/styles.css`: visual system, animation, responsive and mobile layers.
+- `public/artwork/`: hero sculpture and studio image (the only images the site uses).
 - `public/fonts/`: local typefaces and their OFL licenses.
-- `design/homepage-v3-research.json`: references, design decisions, asset provenance and complete generation prompt.
-- `design/homepage-v3-checks.json`: current browser checks.
-- `design/previews/homepage-v3/`: current responsive screenshots.
-- `design/studio-refinement-checks.json`: Studio layout, keyboard, navigation and motion checks.
-- `design/previews/studio-refinement/`: updated Studio previews on mobile, tablet and desktop.
-
-Earlier design directions, unused images, previews and verification reports are retained as history.
 
 Service links add the selected capability to the contact brief without deleting existing text. The form validates inputs and opens an email draft; the user sends it from their email application. Supplied founders and contact destinations are preserved. Product explorations are explicitly presented as concepts, without invented clients or project results.
 

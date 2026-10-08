@@ -3,18 +3,11 @@ import { ArrowRight, ArrowUpRight, ArrowDown, Play, Pause, Menu, Phone, Mail, Gl
 import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose, SheetDescription } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Atmosphere, useScrollMotion } from "@/components/motion";
+import { Services } from "@/components/services";
 
 const navigation = [
   { label: "Home", id: "home" }, { label: "Studio", id: "about" },
   { label: "Services", id: "services" }, { label: "Work", id: "work" }, { label: "Contact", id: "contact" },
-];
-const services = [
-  { title: "Web & Mobile Development", text: "Fast, intuitive experiences. Built to scale.", detail: "Experiences people love to use.", icon: Code2 },
-  { title: "Software Engineering", text: "Thoughtful architecture. Dependable software.", detail: "Strong foundations. Lasting possibilities.", icon: Command },
-  { title: "Cloud & Infrastructure", text: "A reliable foundation for what comes next.", detail: "Ready for wherever you grow.", icon: Globe },
-  { title: "Digital Products", text: "From the first idea to a product that works.", detail: "Your next big idea, made real.", icon: Layers },
-  { title: "Automation & Integrations", text: "Connected systems. Simpler ways of working.", detail: "Less friction. More forward motion.", icon: Asterisk },
-  { title: "AI / Data / Custom Solutions", text: "Practical intelligence for real business challenges.", detail: "Intelligence with a real-world purpose.", icon: Sparkles },
 ];
 const projects = [
   { variant: "platform", title: "Modern web platform", label: "DIGITAL PLATFORM", description: "A considered platform experience, with a clear interface and room to grow.", tags: "Product design / Web / Cloud" },
@@ -97,14 +90,17 @@ function Header() {
       )}</nav>
       <div className="header-actions"><ProjectButton />
         <Sheet open={open} onOpenChange={setOpen}>
-          <SheetTrigger className="menu-trigger" aria-label="Open navigation"><Menu size={23} color={light ? "#141417" : "#f1f0eb"} /></SheetTrigger>
+          <SheetTrigger className="menu-trigger" aria-label="Open navigation"><span className="menu-trigger-label" aria-hidden="true">Menu</span><Menu size={20} /></SheetTrigger>
           <SheetContent className="mobile-menu" onCloseAutoFocus={finishNavigation}>
             <SheetTitle><Brand /></SheetTitle><SheetDescription className="sr-only">Navigate the AVITA website</SheetDescription>
             <p className="eyebrow menu-label">IDEAS. ENGINEERING. REAL IMPACT.</p>
             <nav aria-label="Mobile navigation">{navigation.map((item, index) => <SheetClose key={item.id} asChild>
-              <a href={`#${item.id}`} onClick={() => { destination.current = item.id; }} aria-current={active === item.id ? "location" : undefined}><span><small aria-hidden="true">0{index + 1}</small>{item.label}</span><ArrowUpRight size={24} /></a>
+              <a style={{ "--n": index } as CSSProperties} href={`#${item.id}`} onClick={() => { destination.current = item.id; }} aria-current={active === item.id ? "location" : undefined}><span><small aria-hidden="true">0{index + 1}</small>{item.label}</span><ArrowUpRight size={24} /></a>
             </SheetClose>)}</nav>
-            <SheetClose asChild><a href="#contact" className="button" onClick={() => { destination.current = "contact"; }}>Start a project<ArrowUpRight size={20} /></a></SheetClose>
+            <div className="menu-footer">
+              <SheetClose asChild><a href="#contact" className="button" onClick={() => { destination.current = "contact"; }}>Start a project<span className="button-icon"><ArrowUpRight size={18} /></span></a></SheetClose>
+              <p className="menu-contact"><a href="mailto:contact@avitatechnologies.com">contact@avitatechnologies.com</a><a href="tel:+919975352964">+91 99753 52964</a></p>
+            </div>
           </SheetContent>
         </Sheet>
       </div>
@@ -133,7 +129,7 @@ function Home({ motion, toggleMotion }: { motion: boolean; toggleMotion: () => v
     scene.current.style.setProperty("--ry", `${(event.clientX - rect.left - rect.width / 2) / rect.width * 12}deg`);
   }
   function reset() { scene.current?.style.setProperty("--rx", "0deg"); scene.current?.style.setProperty("--ry", "0deg"); }
-  return <section id="home" className="home-section" aria-labelledby="home-title" onPointerMove={move} onPointerLeave={reset}>
+  return <section id="home" className="home-section" data-replay aria-labelledby="home-title" onPointerMove={move} onPointerLeave={reset}>
     <Atmosphere enabled={motion} /><div className="hero-grid" aria-hidden="true" /><div className="hero-glow" aria-hidden="true" />
     <div className="container">
       <div className="hero-layout">
@@ -224,102 +220,6 @@ function About() {
     </div>
   </section>;
 }
-function Services({ selectService }: { selectService: (service: string) => void }) {
-  const [active, setActive] = useState(0);
-  const [spun, setSpun] = useState(false);
-  const stage = useRef<HTMLDivElement>(null);
-  const ring = useRef<HTMLDivElement>(null);
-  const cards = useRef<(HTMLButtonElement | null)[]>([]);
-  const physics = useRef({ angle: 0, target: 0, velocity: 0, dragging: false, lastX: 0, moved: 0, hover: false, visible: false });
-  const step = 360 / services.length;
-  useEffect(() => {
-    let frame = 0, last = performance.now(), shown = -1;
-    const tick = (now: number) => {
-      const p = physics.current, dt = Math.min(now - last, 50) / 16.67, smooth = document.documentElement.dataset.motion === "on";
-      last = now;
-      if (!p.dragging) {
-        if (Math.abs(p.velocity) > .08 && smooth) {
-          p.angle += p.velocity * dt; p.velocity *= Math.pow(.94, dt);
-          if (Math.abs(p.velocity) <= .08) { p.velocity = 0; p.target = Math.round(p.angle / step) * step; }
-        } else { p.velocity = 0; p.angle += (p.target - p.angle) * (smooth ? Math.min(1, .085 * dt) : 1); }
-      }
-      if (ring.current) ring.current.style.transform = `translateZ(calc(var(--ring-r) * -1)) rotateX(-9deg) rotateY(${p.angle}deg)`;
-      cards.current.forEach((card, index) => card?.style.setProperty("--face", ((Math.cos((index * step + p.angle) * Math.PI / 180) + 1) / 2).toFixed(3)));
-      const front = ((Math.round(-p.angle / step) % services.length) + services.length) % services.length;
-      if (front !== shown) { shown = front; setActive(front); }
-      frame = p.visible ? requestAnimationFrame(tick) : 0;
-    };
-    const observer = new IntersectionObserver(([entry]) => {
-      physics.current.visible = entry.isIntersecting;
-      if (entry.isIntersecting && !frame) { last = performance.now(); frame = requestAnimationFrame(tick); }
-    });
-    if (stage.current) observer.observe(stage.current);
-    const auto = window.setInterval(() => {
-      const p = physics.current;
-      if (p.visible && !p.hover && !p.dragging && p.velocity === 0 && document.documentElement.dataset.motion === "on") p.target -= step;
-    }, 3600);
-    tick(performance.now());
-    return () => { cancelAnimationFrame(frame); observer.disconnect(); window.clearInterval(auto); };
-  }, [step]);
-  function goTo(index: number) {
-    const p = physics.current;
-    p.velocity = 0;
-    p.target = p.angle + ((((-index * step - p.angle) % 360) + 540) % 360 - 180);
-  }
-  function nudge(direction: number) { const p = physics.current; p.velocity = 0; p.target = Math.round(p.angle / step) * step - direction * step; }
-  function down(event: PointerEvent<HTMLDivElement>) {
-    const p = physics.current;
-    p.dragging = true; p.lastX = event.clientX; p.moved = 0; p.velocity = 0;
-  }
-  function move(event: PointerEvent<HTMLDivElement>) {
-    const p = physics.current;
-    if (!p.dragging) return;
-    const delta = (event.clientX - p.lastX) * .32;
-    p.lastX = event.clientX; p.moved += Math.abs(delta); p.angle += delta; p.velocity = delta;
-    if (p.moved > 6 && !stage.current?.hasPointerCapture(event.pointerId)) { stage.current?.setPointerCapture(event.pointerId); setSpun(true); }
-  }
-  function up() {
-    const p = physics.current;
-    if (!p.dragging) return;
-    p.dragging = false;
-    if (Math.abs(p.velocity) <= .08) p.target = Math.round(p.angle / step) * step;
-  }
-  const service = services[active];
-  const ActiveIcon = service.icon;
-  return <section id="services" className="services-section light-section" data-theme="light" aria-labelledby="services-title"><div className="container">
-    <div className="services-top"><SectionLabel number="02">OUR CAPABILITIES</SectionLabel><span className="eyebrow services-count">06 DISCIPLINES / ONE TEAM</span></div>
-    <div className="services-heading reveal"><h2 id="services-title">From <span className="serif-word">what if</span><br />to what’s next.</h2><div className="services-intro"><p className="body-copy">The right mix of strategy, design and technology. Built around your next big move.</p><a href="#contact" className="services-intro-link">Not sure where to start? <strong>Let’s talk</strong><ArrowUpRight size={16} aria-hidden="true" /></a></div></div>
-    <div className="service-stage reveal" ref={stage} role="region" aria-roledescription="carousel" aria-label="Our services" tabIndex={0}
-      onKeyDown={event => { if (event.key === "ArrowRight") { event.preventDefault(); nudge(1); } if (event.key === "ArrowLeft") { event.preventDefault(); nudge(-1); } }}
-      onPointerEnter={() => { physics.current.hover = true; }} onPointerLeave={() => { physics.current.hover = false; up(); }}
-      onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
-      <div className="service-details" aria-live="polite" key={active}>
-        <p className="eyebrow">CAPABILITY 0{active + 1} / 06</p>
-        <span className="service-details-icon" aria-hidden="true"><ActiveIcon size={22} strokeWidth={1.6} /></span>
-        <h3>{service.title}</h3>
-        <p className="service-details-text">{service.text}</p>
-        <p className="service-details-note">{service.detail}</p>
-        <a href="#contact" className="service-cta" onClick={() => selectService(service.title)}>Start a project<span><ArrowUpRight size={18} aria-hidden="true" /></span></a>
-      </div>
-      <div className="service-ring-wrap">
-        <div className="service-ring" ref={ring}>
-          <span className="service-ring-floor" aria-hidden="true" />
-          {services.map(({ title, icon: Icon }, index) => <button type="button" className={`service-card ${active === index ? "is-front" : ""}`} key={title} ref={element => { cards.current[index] = element; }} style={{ "--i": index } as CSSProperties} tabIndex={-1} aria-label={`Show ${title}`} onClick={() => { if (physics.current.moved < 6) goTo(index); }}>
-            <span className="service-card-top"><span>0{index + 1}</span><ArrowUpRight size={16} aria-hidden="true" /></span>
-            <span className="service-card-orb" aria-hidden="true"><Icon size={34} strokeWidth={1.3} /></span>
-            <strong>{title}</strong>
-          </button>)}
-        </div>
-        <p className={`service-hint ${spun ? "is-hidden" : ""}`} aria-hidden="true"><span>←</span> DRAG TO SPIN <span>→</span></p>
-      </div>
-      <div className="service-controls">
-        <button type="button" aria-label="Previous service" onClick={() => nudge(-1)}><ArrowRight size={18} style={{ transform: "rotate(180deg)" }} aria-hidden="true" /></button>
-        <div className="service-dots" aria-hidden="true">{services.map((item, index) => <i className={active === index ? "is-active" : ""} key={item.title} />)}</div>
-        <button type="button" aria-label="Next service" onClick={() => nudge(1)}><ArrowRight size={18} aria-hidden="true" /></button>
-      </div>
-    </div>
-  </div></section>;
-}
 function ProductPreview({ variant }: { variant: string }) {
   if (variant === "mobile") return <div className="product-preview preview-mobile" aria-hidden="true"><span className="preview-background-type">IN MOTION</span><div className="mobile-orbit" /><div className="phone phone-back"><div className="phone-notch" /><span className="phone-time">9:41</span><div className="phone-back-content"><span>YOUR NEXT<br />GOOD HABIT.</span><Asterisk size={80} strokeWidth={1} /><small>Make space for what matters.</small></div></div><div className="phone phone-front"><div className="phone-notch" /><span className="phone-time">9:41</span><div className="phone-content"><div className="phone-greeting">A little better,<br /><strong>every day.</strong></div><span className="app-date">YOUR DAILY OVERVIEW</span><div className="activity-circle"><span>72<small>%</small></span></div><p className="phone-caption">You’re making progress.</p><div className="phone-stat-row"><span><small>FOCUS TIME</small><strong>2h 40m</strong></span><span><small>COMPLETED</small><strong>8 tasks</strong></span></div><div className="phone-task"><span className="task-check">✓</span><span>Make something great<small>Today’s intention</small></span><ArrowUpRight size={17} /></div><div className="phone-nav"><Layers size={18} /><Asterisk size={18} /><Plus size={18} /></div></div></div></div>;
   if (variant === "automation") return <div className="product-preview preview-automation" aria-hidden="true"><span className="preview-background-type">LESS FRICTION.</span><div className="workflow-window"><div className="preview-toolbar"><span className="window-dots"><i /><i /><i /></span><span>Flow / Workflow builder</span><span>•••</span></div><div className="workflow-heading"><span><small>YOUR WORKSPACE</small><strong>Everything, connected.</strong></span><span className="workflow-live"><i />LIVE</span></div><div className="workflow-diagram"><svg viewBox="0 0 600 220" preserveAspectRatio="none"><path d="M105 110H230Q250 110 250 65V55H420M250 110Q250 165 280 165H420" fill="none" stroke="#a6dcb2" strokeWidth="2" strokeDasharray="5 5" /></svg><div className="workflow-node node-trigger"><div><Command size={23} /></div><strong>New request</strong><small>Trigger</small></div><div className="workflow-node node-action"><div><Sparkles size={23} /></div><strong>Enrich with AI</strong><small>Process</small></div><div className="workflow-node node-result"><div><Layers size={23} /></div><strong>Sync to workspace</strong><small>Action</small></div></div><div className="workflow-bottom"><span><i />All systems connected</span><span>RUN WORKFLOW <ArrowRight size={14} /></span></div></div></div>;
@@ -327,9 +227,18 @@ function ProductPreview({ variant }: { variant: string }) {
   return <div className="product-preview preview-platform" aria-hidden="true"><span className="preview-background-type">BUILT TO GROW.</span><div className="dashboard-window"><div className="preview-toolbar"><span className="window-dots"><i /><i /><i /></span><span>nexus / workspace</span><span>•••</span></div><div className="dashboard-layout"><aside className="dashboard-sidebar"><strong><Asterisk size={20} />nexus</strong><span className="sidebar-selected"><Layers size={12} /> Overview</span><span><Code2 size={12} /> Projects</span><span><Globe size={12} /> Analytics</span><span><Command size={12} /> Workspace</span><div className="sidebar-avatar">AV<span>Your workspace<small>Pro plan</small></span></div></aside><div className="dashboard-content"><div className="dashboard-heading"><span><small>YOUR WORKSPACE, AT A GLANCE</small><strong>Good things are growing.</strong></span><span className="dashboard-date">This month ↗</span></div><div className="dashboard-stats"><div><small>Total revenue</small><strong>₹2,84,520</strong><span>↗ 12.8%</span></div><div><small>Active projects</small><strong>24</strong><span>↗ 6 this month</span></div><div><small>Growth</small><strong>32.4%</strong><span>↗ Looking good</span></div></div><div className="dashboard-chart"><div><strong>Performance overview</strong><span>↗ Steady progress</span></div><svg viewBox="0 0 500 155" preserveAspectRatio="none"><defs><linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="1"><stop stopColor="#b8a4ff" stopOpacity=".45" /><stop offset="1" stopColor="#b8a4ff" stopOpacity="0" /></linearGradient></defs><path d="M0 130C40 130 40 95 80 105S145 65 190 80 230 45 280 55 335 15 370 35 445 10 500 5V155H0Z" fill="url(#chart-fill)" /><path d="M0 130C40 130 40 95 80 105S145 65 190 80 230 45 280 55 335 15 370 35 445 10 500 5" fill="none" stroke="#9e85f5" strokeWidth="3" /></svg><div className="chart-months"><span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span></div></div><div className="dashboard-bottom"><span><i />All systems operational</span><span>Built for your next chapter.</span></div></div></div></div></div>;
 }
 function Projects() {
+  const grid = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    // Below 960px previews render at their designed width and scale down, so nothing is cropped.
+    const element = grid.current, card = element?.querySelector<HTMLElement>(".project-image");
+    if (!element || !card) return;
+    const resize = new ResizeObserver(() => element.style.setProperty("--pz", (card.offsetWidth / 640).toFixed(4)));
+    resize.observe(card);
+    return () => resize.disconnect();
+  }, []);
   return <section id="work" className="work-section" aria-labelledby="work-title"><div className="container"><SectionLabel number="03">PRODUCT EXPLORATIONS</SectionLabel>
     <div className="work-heading reveal"><h2 id="work-title">Made to work.<br /><span className="lavender">Made to matter.</span></h2><div><p className="body-copy">A few ways we bring ideas to life.</p><span className="eyebrow work-note">CONCEPTS / DESIGN + ENGINEERING</span></div></div>
-    <div className="project-grid">{projects.map((project, index) => <Dialog key={project.variant}><article className={`project-card reveal project-${project.variant}`}>
+    <div className="project-grid" ref={grid}>{projects.map((project, index) => <Dialog key={project.variant}><article className={`project-card reveal project-${project.variant}`}>
       <DialogTrigger className="project-image" aria-label={`View ${project.title}`}><div className="project-visual-inner"><ProductPreview variant={project.variant} /></div><span className="project-open"><ArrowUpRight size={25} aria-hidden="true" /><span>EXPLORE</span></span></DialogTrigger>
       <div className="project-info"><p className="project-label"><span>0{index + 1}</span>{project.label}</p><DialogTrigger className="project-title">{project.title}<ArrowUpRight size={23} aria-hidden="true" /></DialogTrigger><p className="project-tags">{project.tags}</p></div>
     </article><DialogContent className="project-dialog"><ProductPreview variant={project.variant} /><p className="eyebrow">{project.label} / CONCEPT EXPLORATION</p><DialogTitle>{project.title}</DialogTitle><DialogDescription>{project.description}</DialogDescription><DialogClose asChild><a className="button" href="#contact">Build something like this<ArrowUpRight size={18} /></a></DialogClose></DialogContent></Dialog>)}</div>
@@ -349,15 +258,31 @@ function Contact({ selectedService }: { selectedService: string }) {
     window.location.href = `mailto:contact@avitatechnologies.com?subject=${subject}&body=${body}`;
     setStatus("Your email draft is ready. Send it from your email app.");
   }
-  return <section id="contact" className="contact-section light-section" data-theme="light" aria-labelledby="contact-title"><div className="container"><SectionLabel number="04">YOUR NEXT CHAPTER</SectionLabel>
-    <div className="contact-heading reveal"><h2 id="contact-title">Got a <span className="serif-word">what if?</span><br />Let’s make it real.</h2><Asterisk className="contact-star" size={150} strokeWidth={1.1} aria-hidden="true" /></div>
-    <div className="contact-layout reveal"><div className="contact-copy"><p className="large-copy">Good things start<br />with a conversation.</p><p className="body-copy">A project, a possibility, or a quick hello.<br />We’d love to hear what’s on your mind.</p><address className="contact-links"><div><Mail size={18} /><span><span className="contact-label">DROP US A LINE</span><a href="mailto:contact@avitatechnologies.com">contact@avitatechnologies.com<ArrowUpRight size={17} /></a></span></div><div><Phone size={18} /><span><span className="contact-label">LET’S TALK</span><a href="tel:+919975352964">+91 99753 52964</a><a href="tel:+919321756978">+91 93217 56978</a></span></div><div><Globe size={18} /><span><span className="contact-label">FIND US ONLINE</span><a href="https://avitatechnologies.netlify.app" target="_blank" rel="noreferrer">avitatechnologies.netlify.app<ArrowUpRight size={14} /></a></span></div></address></div>
-      <form className="contact-form" onSubmit={submit}><h3>Tell us about your idea.</h3><div className="form-top-row"><label htmlFor="contact-name">Your Name<input id="contact-name" name="name" placeholder="Full name" autoComplete="name" required maxLength={120} /></label><label htmlFor="contact-email">Your Email<input id="contact-email" name="email" type="email" placeholder="you@company.com" autoComplete="email" required maxLength={254} /></label></div><div className="form-field"><label htmlFor="contact-brief">Project Brief</label><textarea id="contact-brief" name="brief" placeholder="What would you like to build?" value={brief} onChange={event => setBrief(event.target.value)} required rows={3} maxLength={6000} /></div><div className="form-bottom"><p className="form-note">Your idea. Our next conversation.<br />Opens a draft in your email app.</p><button type="submit" className="button">Let’s make it happen<span className="button-icon"><ArrowUpRight size={22} /></span></button></div>{status && <p className="form-status" role="status">{status}</p>}</form>
+  return <section id="contact" className="contact-section light-section" data-theme="light" aria-labelledby="contact-title"><div className="container contact-grid">
+    <div className="contact-intro reveal"><SectionLabel number="04">YOUR NEXT CHAPTER</SectionLabel>
+      <h2 id="contact-title">Got a <span className="serif-word">what if?</span><br />Let’s make it real.</h2>
+      <p className="contact-lead">Good things start with a conversation. A project, a possibility, or a quick hello — we’d love to hear what’s on your mind.</p>
+      <address className="contact-cards">
+        <a className="contact-card" href="mailto:contact@avitatechnologies.com"><span className="contact-icon"><Mail size={18} /></span><span><small>DROP US A LINE</small><strong>contact@avitatechnologies.com</strong></span><ArrowUpRight size={18} aria-hidden="true" /></a>
+        <div className="contact-card"><span className="contact-icon"><Phone size={18} /></span><span><small>LET’S TALK</small><strong><a href="tel:+919975352964">+91 99753 52964</a><span aria-hidden="true"> · </span><a href="tel:+919321756978">+91 93217 56978</a></strong></span></div>
+        <a className="contact-card" href="https://avitatechnologies.netlify.app" target="_blank" rel="noreferrer"><span className="contact-icon"><Globe size={18} /></span><span><small>FIND US ONLINE</small><strong>avitatechnologies.netlify.app</strong></span><ArrowUpRight size={18} aria-hidden="true" /></a>
+      </address>
     </div>
+    <form className="contact-form contact-panel reveal" onSubmit={submit}><div className="contact-panel-head"><h3>Tell us about your idea.</h3><Asterisk className="contact-star" size={48} strokeWidth={1.4} aria-hidden="true" /></div><div className="form-top-row"><label htmlFor="contact-name">Your Name<input id="contact-name" name="name" placeholder="Full name" autoComplete="name" required maxLength={120} /></label><label htmlFor="contact-email">Your Email<input id="contact-email" name="email" type="email" placeholder="you@company.com" autoComplete="email" required maxLength={254} /></label></div><div className="form-field"><label htmlFor="contact-brief">Project Brief</label><textarea id="contact-brief" name="brief" placeholder="What would you like to build?" value={brief} onChange={event => setBrief(event.target.value)} required rows={3} maxLength={6000} /></div><div className="form-bottom"><p className="form-note">Your idea. Our next conversation.<br />Opens a draft in your email app.</p><button type="submit" className="button">Let’s make it happen<span className="button-icon"><ArrowUpRight size={22} /></span></button></div>{status && <p className="form-status" role="status">{status}</p>}</form>
   </div></section>;
 }
+const footerServices = ["Web & Mobile", "Software Engineering", "Cloud & Infrastructure", "Digital Products", "Automation", "AI & Data"];
 function Footer() {
-  return <footer className="site-footer"><div className="container"><div className="footer-top"><a href="#home" className="brand-link" aria-label="AVITA Technologies home"><Brand /></a><p>Independent minds.<br />Extraordinary possibilities.</p><a className="back-top" href="#home">Back to top<span><ArrowUpRight size={20} /></span></a></div><div className="footer-wordmark" aria-hidden="true">AVITA<span>®</span></div><div className="footer-bottom"><p>© 2026 AVITA TECHNOLOGIES</p><p>IDEAS. ENGINEERING. REAL IMPACT.</p><span>RDJ &amp; SMK</span></div></div></footer>;
+  return <footer className="site-footer"><div className="container">
+    <div className="footer-grid">
+      <div className="footer-brand"><a href="#home" className="brand-link" aria-label="AVITA Technologies home"><Brand /></a><p>Independent minds.<br />Extraordinary possibilities.</p></div>
+      <div className="footer-pitch"><p className="footer-title">HAVE AN IDEA?</p><p className="footer-pitch-title">Let’s build it <span className="serif-word">together.</span></p><a className="footer-pitch-mail" href="mailto:contact@avitatechnologies.com">contact@avitatechnologies.com<ArrowUpRight size={18} aria-hidden="true" /></a><a className="button footer-cta" href="#contact">Start a project<span className="button-icon"><ArrowUpRight size={18} aria-hidden="true" /></span></a></div>
+      <nav aria-label="Footer"><p className="footer-title">EXPLORE</p><ul>{navigation.map(item => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}</ul></nav>
+      <div className="footer-capabilities"><p className="footer-title">CAPABILITIES</p><ul>{footerServices.map(item => <li key={item}><a href="#services">{item}</a></li>)}</ul></div>
+      <div className="footer-contact"><p className="footer-title">CONTACT</p><ul><li><a href="mailto:contact@avitatechnologies.com">contact@avitatechnologies.com</a></li><li><a href="tel:+919975352964">+91 99753 52964</a></li><li><a href="tel:+919321756978">+91 93217 56978</a></li><li><a href="https://avitatechnologies.netlify.app" target="_blank" rel="noreferrer">avitatechnologies.netlify.app</a></li></ul></div>
+    </div>
+    <div className="footer-bottom"><p>© 2026 AVITA TECHNOLOGIES · RDJ &amp; SMK</p><p>IDEAS. ENGINEERING. REAL IMPACT.</p><a className="back-top" href="#home">Back to top<span><ArrowUpRight size={18} /></span></a></div>
+  </div><span className="footer-wordmark" aria-hidden="true">AVITA</span></footer>;
 }
 export default function Website() {
   const [selectedService, setSelectedService] = useState("");

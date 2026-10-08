@@ -68,10 +68,12 @@ export function useScrollMotion(enabled: boolean) {
     const root = document.documentElement;
     root.dataset.motion = enabled ? "on" : "off";
     const reveals = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-      if (entry.isIntersecting) { entry.target.classList.add("is-visible"); observer.unobserve(entry.target); }
-    }), { threshold: .08 });
+    // Reveals replay: they reset once an element leaves the screen and animate again when it returns.
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle("is-visible", entry.isIntersecting)), { threshold: .08 });
     reveals.forEach(element => observer.observe(element));
+    // Entrance animations inside [data-replay] restart whenever that block scrolls back into view.
+    const replay = new IntersectionObserver(entries => entries.forEach(entry => entry.target.classList.toggle("is-away", !entry.isIntersecting)));
+    document.querySelectorAll<HTMLElement>("[data-replay]").forEach(element => replay.observe(element));
     let frame = 0;
     const parallax = Array.from(document.querySelectorAll<HTMLElement>("[data-parallax]"));
     function update() {
@@ -90,6 +92,6 @@ export function useScrollMotion(enabled: boolean) {
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     update();
-    return () => { observer.disconnect(); cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
+    return () => { observer.disconnect(); replay.disconnect(); cancelAnimationFrame(frame); window.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
   }, [enabled]);
 }
