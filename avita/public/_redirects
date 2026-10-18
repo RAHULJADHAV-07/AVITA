@@ -1,0 +1,3 @@
+# One official address for Google: send the Netlify subdomain to the real domain
+https://avitatechnologies.netlify.app/*  https://avitatechnologies.com/:splat  301!
+http://avitatechnologies.netlify.app/*   https://avitatechnologies.com/:splat  301!
