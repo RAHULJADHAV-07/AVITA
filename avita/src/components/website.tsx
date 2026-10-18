@@ -116,19 +116,6 @@ function Header() {
     </div>
   </header>;
 }
-function Intro() {
-  const [playing, setPlaying] = useState(true);
-  return <Dialog><DialogTrigger className="intro-button"><span className="play-circle"><Play size={12} fill="currentColor" /></span>Meet the studio</DialogTrigger>
-    <DialogContent className="intro-dialog"><DialogTitle className="sr-only">AVITA studio introduction</DialogTitle><DialogDescription className="sr-only">An animated introduction to our ideas, engineering and approach.</DialogDescription>
-      <div className={`intro-slides ${playing ? "" : "paused"}`}>
-        {[["Ideas.", "Everything starts with a possibility."], ["Engineering.", "Care in every detail. Purpose in every decision."], ["Real impact.", "Digital products. Built differently."]].map(([title, copy], index) => <div className="intro-slide" key={title} style={{ "--slide-index": index } as CSSProperties}>
-          <img src="/artwork/hero-sculpture-v3.webp" alt="" width="1254" height="1254" /><div><p className="eyebrow">AVITA TECHNOLOGIES / 0{index + 1}</p><h2>{title}</h2><p>{copy}</p></div>
-        </div>)}
-      </div>
-      <button className="intro-pause" onClick={() => setPlaying(!playing)} aria-label={playing ? "Pause intro" : "Play intro"}>{playing ? <Pause size={18} /> : <Play size={18} />}</button>
-    </DialogContent>
-  </Dialog>;
-}
 function Home({ motion, toggleMotion }: { motion: boolean; toggleMotion: () => void }) {
   const scene = useRef<HTMLDivElement>(null);
   function move(event: PointerEvent<HTMLElement>) {
@@ -146,7 +133,7 @@ function Home({ motion, toggleMotion }: { motion: boolean; toggleMotion: () => v
           <p className="eyebrow hero-eyebrow"><span className="status-dot" />SOFTWARE STUDIO · ANDHERI, MUMBAI</p>
           <h1 id="home-title"><span className="sr-only">AVITA Technologies, software development company in Andheri West, Mumbai. </span><span className="hero-line"><span>Digital products.</span></span><span className="hero-line"><span>Built <em>differently.</em></span></span></h1>
           <div className="hero-description"><span className="hero-copy-line" aria-hidden="true" /><p>We turn ambitious ideas into digital experiences.<br className="desktop-break" /> Considered design. Serious engineering. Nothing ordinary.</p></div>
-          <div className="hero-actions"><ProjectButton>Build with us</ProjectButton><Intro /></div>
+          <div className="hero-actions"><ProjectButton>Build with us</ProjectButton></div>
         </div>
         <div className="hero-visual" ref={scene} aria-label="Interactive chrome sculpture">
           <div className="orbital-scene"><div className="orbit orbit-one" aria-hidden="true"><i /></div><div className="orbit orbit-two" aria-hidden="true"><i /></div>
@@ -534,10 +521,15 @@ function Footer() {
     </div>
     <div className="footer-grid">
       <div className="footer-brand"><a href="#home" className="brand-link" aria-label="AVITA Technologies home"><Brand /></a><p>Independent minds.<br />Extraordinary possibilities.</p><p className="footer-origin"><MapPin size={13} aria-hidden="true" />Andheri West, Mumbai, India</p></div>
-      <nav aria-label="Footer"><p className="footer-title">EXPLORE</p><ul>{navigation.map(item => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}</ul></nav>
-      <div><p className="footer-title">CAPABILITIES</p><ul>{footerServices.map(item => <li key={item}><a href="#services">{item}</a></li>)}</ul></div>
-      <div><p className="footer-title">SELECTED WORK</p><ul><li><a href="#work">Jaikvin Global</a></li>{footerWork.map(([label, url]) => <li key={url}><a href={url} target="_blank" rel="noreferrer">{label}<ArrowUpRight size={13} aria-hidden="true" /></a></li>)}</ul></div>
-      <div className="footer-contact"><p className="footer-title">CONTACT</p><ul><li><a href="mailto:contact@avitatechnologies.com">contact@avitatechnologies.com</a></li><li><a href="tel:+919130153071">+91 91301 53071</a></li><li><a href="https://wa.me/919130153071" target="_blank" rel="noreferrer">WhatsApp<ArrowUpRight size={13} aria-hidden="true" /></a></li><li><a href="https://www.google.com/maps/search/?api=1&query=Plot+No+49+Manish+Nagar+Andheri+West+Mumbai+400053" target="_blank" rel="noreferrer" className="footer-address">Plot No. 49, Manish Nagar,<br />Andheri West, Mumbai 400053</a></li></ul></div>
+      <nav className="footer-explore" aria-label="Footer"><p className="footer-title">EXPLORE</p><ul>{navigation.map(item => <li key={item.id}><a href={`#${item.id}`}>{item.label}</a></li>)}</ul></nav>
+      <div className="footer-capabilities"><p className="footer-title">CAPABILITIES</p><ul>{footerServices.map(item => <li key={item}><a href="#services">{item}</a></li>)}</ul></div>
+      <div className="footer-work"><p className="footer-title">SELECTED WORK</p><ul><li><a href="#work">Jaikvin Global</a></li>{footerWork.map(([label, url]) => <li key={url}><a href={url} target="_blank" rel="noreferrer">{label}<ArrowUpRight size={13} aria-hidden="true" /></a></li>)}</ul></div>
+      <div className="footer-contact"><p className="footer-title">CONTACT</p><ul>
+        <li><a href="mailto:contact@avitatechnologies.com"><Mail className="footer-ico" size={17} aria-hidden="true" /><span>contact@avitatechnologies.com</span></a></li>
+        <li><a href="tel:+919130153071"><Phone className="footer-ico" size={17} aria-hidden="true" /><span>+91 91301 53071</span></a></li>
+        <li><a href="https://wa.me/919130153071" target="_blank" rel="noreferrer"><MessageCircle className="footer-ico" size={17} aria-hidden="true" /><span>WhatsApp</span><ArrowUpRight size={13} aria-hidden="true" /></a></li>
+        <li><a href="https://www.google.com/maps/search/?api=1&query=Plot+No+49+Manish+Nagar+Andheri+West+Mumbai+400053" target="_blank" rel="noreferrer" className="footer-address"><MapPin className="footer-ico" size={17} aria-hidden="true" /><span>Plot No. 49, Manish Nagar,<br />Andheri West, Mumbai 400053</span></a></li>
+      </ul></div>
     </div>
     <div className="footer-bottom"><p>© 2026 AVITA TECHNOLOGIES · RDJ &amp; SMK</p><p>IDEAS. ENGINEERING. REAL IMPACT.</p><a className="back-top" href="#home">Back to top<span><ArrowUpRight size={18} aria-hidden="true" /></span></a></div>
   </div></footer>;
