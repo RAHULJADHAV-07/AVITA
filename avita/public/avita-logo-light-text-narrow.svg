@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 50" width="352" height="200" role="img" aria-label="AVITA Technologies">
+  <title>AVITA Technologies</title>
+  <g fill="none" stroke="#f1f0eb" stroke-width="3.1" stroke-linecap="square" stroke-linejoin="miter"><path d="M2.667 33 11.333 7 20 33M6.667 24h9.333M23.333 8l7.333 25L38 8M42.667 11v22M48.667 8h14.667M56 9v24M66 33l8.667-26 8.667 26M70 24h9.333"/></g>
+  <path d="M74.667 7l8.667 26h-2.667L74.667 15z" fill="#b8a4ff"/>
+  <path d="M41.167 12v12" stroke="#b8a4ff" stroke-width="3.1"/>
+  <circle cx="42.667" cy="5" r="2.4" fill="#b8a4ff"/>
+  <text x="3" y="46" fill="#f1f0eb" font-family="Arial, Helvetica, sans-serif" font-size="5.3" font-weight="600" letter-spacing="2.45">TECHNOLOGIES</text>
+</svg>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent, type PointerEvent, type ReactNode, type RefObject } from "react";
-import { ArrowUpRight, ArrowDown, Play, Pause, Menu, Phone, Mail, Globe, Asterisk, Plus, Check, MessageCircle, MapPin } from "lucide-react";
+import { ArrowUpRight, ArrowDown, ArrowLeft, Play, Pause, Menu, Phone, Mail, Globe, Asterisk, Plus, Check, MessageCircle, MapPin } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose, SheetDescription } from "@/components/ui/sheet";
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogTrigger, DialogClose } from "@/components/ui/dialog";
 import { Atmosphere, useScrollMotion } from "@/components/motion";
@@ -132,12 +132,12 @@ function Home({ motion, toggleMotion }: { motion: boolean; toggleMotion: () => v
         <div className="hero-copy">
           <p className="eyebrow hero-eyebrow"><span className="status-dot" />SOFTWARE STUDIO · ANDHERI, MUMBAI</p>
           <h1 id="home-title"><span className="sr-only">AVITA Technologies, software development company in Andheri West, Mumbai. </span><span className="hero-line"><span>Digital products.</span></span><span className="hero-line"><span>Built <em>differently.</em></span></span></h1>
-          <div className="hero-description"><span className="hero-copy-line" aria-hidden="true" /><p>We turn ambitious ideas into digital experiences.<br className="desktop-break" /> Considered design. Serious engineering. Nothing ordinary.</p></div>
+          <div className="hero-description"><p>We turn ambitious ideas into digital experiences.<br className="desktop-break" /> Considered design. Serious engineering. Nothing ordinary.</p></div>
           <div className="hero-actions"><ProjectButton>Build with us</ProjectButton></div>
         </div>
         <div className="hero-visual" ref={scene} aria-label="Interactive chrome sculpture">
           <div className="orbital-scene"><div className="orbit orbit-one" aria-hidden="true"><i /></div><div className="orbit orbit-two" aria-hidden="true"><i /></div>
-            <div className="sculpture-parallax" data-parallax><img className="hero-sculpture" src="/artwork/hero-sculpture-v3.webp" alt="Floating liquid-chrome triangular sculpture with violet reflections" width="1254" height="1254" fetchPriority="high" loading="eager" /></div>
+            <div className="sculpture-parallax" data-parallax><img className="hero-sculpture" src="/artwork/hero-sculpture-v3.webp" alt="Floating liquid chrome triangular sculpture with violet reflections" width="1254" height="1254" fetchPriority="high" loading="eager" /></div>
             <span className="scene-coordinate scene-coordinate-top" aria-hidden="true">AV / 01<br />IDEAS INTO REALITY</span>
           </div>
         </div>
@@ -205,11 +205,8 @@ function About() {
             <span><Asterisk size={26} strokeWidth={1.6} /></span>
           </div>
           <aside className="studio-people" aria-labelledby="people-title">
-            <h3 id="people-title" className="eyebrow"><span />THE PEOPLE BEHIND THE IDEAS</h3>
-            <ul className="founder-list">{founders.map((founder, index) => <li className={`founder${founder.timeline ? " has-profile" : ""}`} key={founder.initials}>
-              <span className="founder-initials" aria-hidden="true"><span>{founder.initials}</span></span><div><p className="founder-role">CO-FOUNDER</p><h4>{founder.name}</h4>{founder.timeline && <span className="founder-more" aria-hidden="true">View profile<ArrowUpRight size={12} /></span>}</div><span className="founder-index" aria-hidden="true">0{index + 1}</span>
-              {founder.timeline && <FounderProfile founder={founder} />}
-            </li>)}</ul>
+            <h3 id="people-title" className="eyebrow">THE PEOPLE BEHIND THE IDEAS</h3>
+            <FounderList />
           </aside>
         </figure>
       </div>
@@ -221,7 +218,7 @@ function About() {
 // pulls back, then the cursor clicks the control (target, x% / y%) that leads to the next screen.
 type JgFocus = [number, number, number, string];
 const jgTour: { file: string; name: string; target: [number, number]; focus: JgFocus[] }[] = [
-  { file: "01", name: "Sign in", target: [75.7, 57.5], focus: [[75.7, 50, 2.1, "JWT sign-in, bcrypt passwords and lockout after failed attempts"]] },
+  { file: "01", name: "Sign in", target: [75.7, 57.5], focus: [[75.7, 50, 2.1, "JWT sign in, bcrypt passwords and lockout after failed attempts"]] },
   { file: "02", name: "Dashboard", target: [20.8, 3.7], focus: [[6, 34, 1.9, "Boxes and volume still pending, per supplier and PO"], [70, 74, 1.9, "Dispatch status of every invoice at a glance"]] },
   { file: "04", name: "Purchase orders", target: [13.5, 18.2], focus: [[8, 50, 1.9, "Every purchase order with its delivery progress"], [60, 48, 1.9, "Which suppliers are still pending, per PO"]] },
   { file: "03", name: "Buyers summary", target: [34.2, 3.7], focus: [[6, 48, 1.9, "Item-wise quantities across all POs, entered only once"], [80, 20, 2.3, "Export to Excel or PDF in one click"]] },
@@ -310,33 +307,82 @@ function SiteWindow({ site, page = 0, className = "" }: { site: SiteInfo; page?:
 function AppPhone({ app, screen = 0, className = "" }: { app: AppInfo; screen?: number; className?: string }) {
   return <div className={`app-phone app-${app.dir} ${className}`}><div className="app-screen"><img src={appShot(app, screen)} alt="" width="720" height="1600" loading="lazy" decoding="async" /></div><span className="app-tag"><i />{app.name}<small>{app.tagline}</small></span></div>;
 }
-// Founders with a `timeline` open a profile dialog. Drop a photo at the `photo` path; until then the initials show.
-type Founder = { initials: string; name: string; photo?: string; headline?: string; timeline?: [string, string, string][] };
-const founders: Founder[] = [
-  { initials: "SMK", name: "Swatantra Mahavir Kashiwal" },
-  { initials: "RDJ", name: "Rahul Devsingh Jadhav", photo: "/team/rahul.webp", headline: "Co-founder and software developer. Rahul turns ideas into working products, from the first screen to the last line of backend code.", timeline: [
-    ["NOW", "Software Developer", "Samraj Music Right Management"],
-    ["CO-FOUNDER", "AVITA Technologies", "Designing and engineering products for our clients"],
-    ["EDUCATION", "Bachelor of Engineering, Information Technology", "Vasantdada Patil Pratishthan's College of Engineering and Visual Arts"],
-    ["TRAINING", "Full Stack Web Development course", "LivetechINDIA"],
-  ] },
+// Founder cards open a full-screen profile: portrait on one side, bio and career on the other.
+type ProfileEntry = { tag: string; title: string; org: string };
+type Founder = { initials: string; name: string; role: string; photo?: string; about: string; career: ProfileEntry[]; education: ProfileEntry[] };
+const sharedCareer: ProfileEntry[] = [
+  { tag: "Current", title: "Cofounder", org: "AVITA Technologies" },
+  { tag: "Current", title: "Software Developer", org: "Samraj Music Right Management" },
+  { tag: "Internship", title: "Software Developer Intern", org: "Googoonalo" },
 ];
-function FounderPhoto({ founder }: { founder: Founder }) {
+const degree: ProfileEntry = { tag: "Degree", title: "Bachelor of Engineering, Information Technology", org: "Vasantdada Patil Pratishthan's College of Engineering and Visual Arts" };
+const founders: Founder[] = [
+  { initials: "SMK", name: "Swatantra Mahavir Kashiwal", role: "Cofounder · Software Developer", photo: "/team/swatantra.webp", about: "Swatantra shapes how our products work and feel, then builds them end to end, from interface to infrastructure.", career: sharedCareer, education: [degree] },
+  { initials: "RDJ", name: "Rahul Devsingh Jadhav", role: "Cofounder · Software Developer", photo: "/team/rahul.webp", about: "Rahul turns ideas into working products, from the first screen to the last line of backend code.", career: sharedCareer, education: [degree, { tag: "Training", title: "Full Stack Web Development", org: "LivetechINDIA" }] },
+];
+function FounderAvatar({ founder, className }: { founder: Founder; className: string }) {
   const [failed, setFailed] = useState(!founder.photo);
-  return <div className="profile-photo">{failed ? <span className="profile-initials" aria-hidden="true">{founder.initials}</span> : <img src={founder.photo} alt={`Portrait of ${founder.name}`} width="800" height="1000" loading="lazy" decoding="async" onError={() => setFailed(true)} />}</div>;
+  return <span className={className}>{failed ? <span className="founder-fallback" aria-hidden="true">{founder.initials}</span> : <img src={founder.photo} alt={`Portrait of ${founder.name}`} width="400" height="500" decoding="async" onError={() => setFailed(true)} />}</span>;
 }
-function FounderProfile({ founder }: { founder: Founder }) {
-  return <Dialog><DialogTrigger className="founder-open" aria-label={`View profile of ${founder.name}`} />
-    <DialogContent className="founder-dialog">
-      <FounderPhoto founder={founder} />
-      <div className="profile-body">
-        <p className="eyebrow">CO-FOUNDER / AVITA TECHNOLOGIES</p>
-        <DialogTitle>{founder.name}</DialogTitle>
-        <DialogDescription>{founder.headline}</DialogDescription>
-        <ol className="profile-timeline">{founder.timeline!.map(([tag, title, place]) => <li key={title}><small>{tag}</small><strong>{title}</strong><span>{place}</span></li>)}</ol>
-        <DialogClose asChild><a className="button" href="#contact">Work with {founder.name.split(" ")[0]}<ArrowUpRight size={18} /></a></DialogClose>
-      </div>
-    </DialogContent></Dialog>;
+function ProfileRows({ label, entries }: { label: string; entries: ProfileEntry[] }) {
+  return <section className="fp-section"><h3 className="fp-label">{label}</h3>
+    <ol className="fp-rows">{entries.map(entry => <li key={entry.title + entry.org}><small className={entry.tag === "Current" ? "is-current" : undefined}>{entry.tag}</small><div><strong>{entry.title}</strong><span>{entry.org}</span></div></li>)}</ol>
+  </section>;
+}
+function FounderList() {
+  const [open, setOpen] = useState<number | null>(null);
+  const founder = open === null ? null : founders[open];
+  const step = (by: number) => setOpen(current => current === null ? current : (current + by + founders.length) % founders.length);
+  useEffect(() => {
+    if (open === null) return;
+    const onKey = (event: KeyboardEvent) => { if (event.key === "ArrowRight") step(1); if (event.key === "ArrowLeft") step(-1); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open === null]);
+  const [first, ...rest] = founder ? founder.name.split(" ") : [""];
+  return <>
+    <ul className="founder-list">{founders.map((item, index) => <li className="founder" key={item.initials}>
+      <FounderAvatar founder={item} className="founder-photo" /><div><p className="founder-role">COFOUNDER</p><h4>{item.name}</h4><span className="founder-more" aria-hidden="true">View profile<ArrowUpRight size={12} /></span></div><span className="founder-go" aria-hidden="true"><ArrowUpRight size={16} /></span>
+      <button type="button" className="founder-open" aria-label={`View profile of ${item.name}`} onClick={() => setOpen(index)} />
+    </li>)}</ul>
+    <Dialog open={founder !== null} onOpenChange={value => !value && setOpen(null)}>
+      {founder && <DialogContent className="founder-dialog" showCloseButton={false}>
+        <div className="fp-bar">
+          <DialogClose className="fp-back"><ArrowLeft size={16} aria-hidden="true" /><span>Back to studio</span></DialogClose>
+          <nav className="fp-tabs" aria-label="Founders">{founders.map((item, index) => <button type="button" key={item.initials} className={index === open ? "is-active" : undefined} aria-current={index === open ? "true" : undefined} onClick={() => setOpen(index)}>
+            <FounderAvatar founder={item} className="fp-tab-photo" /><span>{item.name.split(" ")[0]}</span>
+          </button>)}</nav>
+          <span className="fp-count" aria-hidden="true">0{open! + 1} <i>/</i> 0{founders.length}</span>
+        </div>
+        <div className="fp-layout" key={founder.initials}>
+          <aside className="fp-visual">
+            <span className="fp-watermark" aria-hidden="true">{founder.initials}</span>
+            <FounderAvatar founder={founder} className="fp-portrait" />
+            <p className="fp-caption"><MapPin size={13} aria-hidden="true" />Andheri West, Mumbai, India</p>
+          </aside>
+          <article className="fp-content">
+            <header className="fp-intro">
+              <p className="eyebrow fp-eyebrow">COFOUNDER · AVITA TECHNOLOGIES</p>
+              <DialogTitle className="fp-name">{first} <em>{rest.join(" ")}</em></DialogTitle>
+              <p className="fp-role">{founder.role}</p>
+              <DialogDescription className="fp-lead">{founder.about}</DialogDescription>
+            </header>
+            <div className="fp-panels">
+              <div className="fp-panel"><ProfileRows label="Career" entries={founder.career} /><p className="fp-motto"><Asterisk size={16} aria-hidden="true" />Small by choice. Ambitious by nature.</p></div>
+              <div className="fp-stack">
+                <div className="fp-panel"><ProfileRows label="Education" entries={founder.education} /></div>
+                <div className="fp-cta">
+                  <p>Have a project in mind?<br /><em>Let’s build it together.</em></p>
+                  <div><DialogClose asChild><a className="button" href="#contact">Work with {first}<ArrowUpRight size={18} /></a></DialogClose>
+                    <a className="fp-mail" href="mailto:contact@avitatechnologies.com" aria-label={`Email ${first}`}><Mail size={18} /></a></div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </DialogContent>}
+    </Dialog>
+  </>;
 }
 function ProductPreview({ project }: { project: Project }) {
   if (project.apps) return <div className="product-preview preview-apps" aria-hidden="true"><span className="preview-background-type">DAILY HABITS.</span>{project.apps.map((app, i) => <AppPhone key={app.dir} app={app} className={`app-phone-${i}`} />)}</div>;
@@ -351,7 +397,7 @@ const cases: Record<string, CaseInfo> = {
     summary: "A full-stack web app that runs a pipe-fittings export business, from the buyer's purchase order to the final shipping papers.",
     brief: ["The problem", "Every shipment needed 40+ papers typed by hand in Excel, with the same figures keyed in again and again."],
     stats: [["40+", "papers per shipment"], ["1", "record they come from"], ["v7.3", "live in production"]],
-    built: ["40+ export and customs papers in one click, as PDF, Excel or Word", "Our own XLSX and DOCX writers, with live Excel formulas", "Orders, packing, shipments, invoicing and costing, all linked", "Columns, ports, banks and tax rules set from a Setup screen", "JWT sign-in, role permissions, lockout and an audit log", "Versioned releases with in-app \u201cWhat's new\u201d notes"],
+    built: ["40+ export and customs papers in one click, as PDF, Excel or Word", "Our own XLSX and DOCX writers, with live Excel formulas", "Orders, packing, shipments, invoicing and costing, all linked", "Columns, ports, banks and tax rules set from a Setup screen", "JWT sign in, role permissions, lockout and an audit log", "Versioned releases with in app \u201cWhat's new\u201d notes"],
     stack: ["Tech stack", ["React 18", "Vite", "React Query", "FastAPI", "SQLAlchemy", "PostgreSQL", "Docker", "nginx"]],
     result: ["Impact", "A shipment's papers now take minutes instead of hours, and every one shows the same figures."],
   },
@@ -360,7 +406,7 @@ const cases: Record<string, CaseInfo> = {
     summary: "An immersive studio website where scrolling becomes a space flight: from a 3D Earth over Mumbai, past eight planets, to the launch pad.",
     brief: ["The brief", "Make an IT agency's services memorable, so they read like a journey instead of another grid of cards."],
     stats: [["8", "planets, one per service"], ["5", "mission stages"], ["3D", "rendered live in the browser"]],
-    built: ["A real-time 3D Earth hero that opens over Mumbai, India", "Scroll to travel: eight planets, each presenting one service", "A launch countdown for the process: Discover, Design, Build, Launch, Operate", "Mission-control telemetry for projects, clients and systems", "A crew deck with 3D astronauts introducing the team", "A flight HUD for altitude, velocity and status, with smooth scrolling"],
+    built: ["A real time 3D Earth hero that opens over Mumbai, India", "Scroll to travel: eight planets, each presenting one service", "A launch countdown for the process: Discover, Design, Build, Launch, Operate", "Mission-control telemetry for projects, clients and systems", "A crew deck with 3D astronauts introducing the team", "A flight HUD for altitude, velocity and status, with smooth scrolling"],
     stack: ["Tech stack", ["React", "Three.js", "WebGL", "Lenis", "Vite", "Netlify"]],
     result: ["The result", "A list of services becomes a flight people want to finish, and the studio stands apart from every card grid."],
   },
@@ -369,7 +415,7 @@ const cases: Record<string, CaseInfo> = {
     summary: "Two installable apps people keep on their home screen: My Hisab tracks money in and out, Thali tracks Indian food calories and macros.",
     brief: ["The brief", "Make daily tracking quick enough to do in seconds, with the numbers that matter on the very first screen."],
     stats: [["2", "apps, one design language"], ["v2.5", "My Hisab, live"], ["v4.2", "Thali, live"]],
-    built: ["My Hisab: balance in hand across UPI, bank and cash, at a glance", "My Hisab: a searchable ledger, borrowed & lent, and savings goals", "My Hisab: an installable PWA that feels like a native app", "Thali: daily calories and macros against a personal target", "Thali: week and month charts, streaks and a weight trend", "Thali: targets from BMR and TDEE, meal reminders, Google sign-in"],
+    built: ["My Hisab: balance in hand across UPI, bank and cash, at a glance", "My Hisab: a searchable ledger, borrowed & lent, and savings goals", "My Hisab: an installable PWA that feels like a native app", "Thali: daily calories and macros against a personal target", "Thali: week and month charts, streaks and a weight trend", "Thali: targets from BMR and TDEE, meal reminders, Google sign in"],
     stack: ["Tech stack", ["React", "Vite", "PWA", "Next.js", "Recharts", "Vercel"]],
     result: ["The result", "Logging takes seconds, and each app answers its big question first: how much do I have, and how much have I eaten?"],
   },
@@ -498,7 +544,7 @@ function Contact({ selectedService }: { selectedService: string }) {
   return <section id="contact" className="contact-section light-section" data-theme="light" aria-labelledby="contact-title"><div className="container contact-grid">
     <div className="contact-intro reveal"><SectionLabel number="04">YOUR NEXT CHAPTER</SectionLabel>
       <h2 id="contact-title">Got a <span className="serif-word">what if?</span><br />Let’s make it real.</h2>
-      <p className="contact-lead">Good things start with a conversation. A project, a possibility, or a quick hello — we’d love to hear what’s on your mind.</p>
+      <p className="contact-lead">Good things start with a conversation. A project, a possibility, or a quick hello. We’d love to hear what’s on your mind.</p>
       <address className="contact-cards">
         <a className="contact-card" href="mailto:contact@avitatechnologies.com"><span className="contact-icon"><Mail size={18} /></span><span><small>DROP US A LINE</small><strong>contact@avitatechnologies.com</strong></span><ArrowUpRight size={18} aria-hidden="true" /></a>
         <a className="contact-card" href="https://www.google.com/maps/search/?api=1&query=Plot+No+49+Manish+Nagar+Andheri+West+Mumbai+400053" target="_blank" rel="noreferrer"><span className="contact-icon"><MapPin size={18} /></span><span><small>VISIT US</small><strong>Plot No. 49, Manish Nagar, Andheri West, Mumbai 400053</strong></span><ArrowUpRight size={18} aria-hidden="true" /></a>

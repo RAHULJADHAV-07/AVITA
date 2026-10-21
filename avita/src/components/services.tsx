@@ -8,7 +8,7 @@ const services = [
   { title: "Cloud & Infrastructure", short: "Cloud", text: "A reliable foundation for what comes next.", detail: "Ready for wherever you grow.", tags: ["DevOps", "Scale", "Security"], icon: Globe },
   { title: "Digital Products", short: "Products", text: "From the first idea to a product that works.", detail: "Your next big idea, made real.", tags: ["Strategy", "UX / UI", "MVP"], icon: Layers },
   { title: "Automation & Integrations", short: "Automation", text: "Connected systems. Simpler ways of working.", detail: "Less friction. More forward motion.", tags: ["Workflows", "Integrations", "Ops"], icon: Asterisk },
-  { title: "AI / Data / Custom Solutions", short: "AI & Data", text: "Practical intelligence for real business challenges.", detail: "Intelligence with a real-world purpose.", tags: ["AI agents", "Data", "Custom"], icon: Sparkles },
+  { title: "AI / Data / Custom Solutions", short: "AI & Data", text: "Practical intelligence for real business challenges.", detail: "Intelligence with a real world purpose.", tags: ["AI agents", "Data", "Custom"], icon: Sparkles },
 ];
 const ACCENT = services.map(() => "#b8a4ff");
 const DEEP = services.map(() => "#7a52f0");
