@@ -10,6 +10,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = join(root, "dist");
 const site = "https://avitatechnologies.com";
 const today = new Date().toISOString().slice(0, 10);
+const { version } = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const phone = { display: "+91 91301 53071", tel: "+919130153071", schema: "+91-9130153071" };
 const email = "contact@avitatechnologies.com";
 const whatsapp = "https://wa.me/919130153071";
@@ -188,7 +189,7 @@ const footer = `<footer class="site-footer"><div class="container">
     <div class="footer-work"><p class="footer-title">SELECTED WORK</p><ul>${footerWork.map(([l, h]) => `<li><a href="${h}"${external(h)}>${l}${h.startsWith("http") ? icon.arrow.replace(/18/g, "13") : ""}</a></li>`).join("")}</ul></div>
     <div class="footer-contact"><p class="footer-title">CONTACT</p><ul><li><a href="mailto:${email}"><span>${email}</span></a></li><li><a href="tel:${phone.tel}"><span>${phone.display}</span></a></li><li><a href="${whatsapp}" target="_blank" rel="noreferrer"><span>WhatsApp</span></a></li><li><a href="${maps}" target="_blank" rel="noreferrer" class="footer-address"><span>Plot No. 49, Manish Nagar,<br>Andheri West, Mumbai 400053</span></a></li></ul></div>
   </div>
-  <div class="footer-bottom"><p>© ${today.slice(0, 4)} AVITA TECHNOLOGIES · RDJ &amp; SMK</p><p>IDEAS. ENGINEERING. REAL IMPACT.</p><a class="back-top" href="#top">Back to top<span>${icon.arrow}</span></a></div>
+  <div class="footer-bottom"><p>© ${today.slice(0, 4)} AVITA TECHNOLOGIES · RDJ &amp; SMK<span class="footer-version">v${version}</span></p><p>IDEAS. ENGINEERING. REAL IMPACT.</p><a class="back-top" href="#top">Back to top<span>${icon.arrow}</span></a></div>
 </div></footer>`;
 
 function body(page) {

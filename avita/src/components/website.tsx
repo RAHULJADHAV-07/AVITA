@@ -91,7 +91,6 @@ function Header() {
     }, 0);
   }
   return <header className={`site-header ${light ? "header-light" : ""} ${active === "contact" ? "header-contact" : ""} ${scrolled ? "header-scrolled" : ""}`}>
-    <div className="scroll-progress" aria-hidden="true" />
     <div className="container header-inner">
       <a className="brand-link" href="#home" aria-label="AVITA Technologies home"><Brand light={light} /></a>
       <nav className="desktop-navigation" aria-label="Main navigation">{navigation.map((item, index) =>
@@ -578,7 +577,7 @@ function Footer() {
         <li><a href="https://www.google.com/maps/search/?api=1&query=Plot+No+49+Manish+Nagar+Andheri+West+Mumbai+400053" target="_blank" rel="noreferrer" className="footer-address"><MapPin className="footer-ico" size={17} aria-hidden="true" /><span>Plot No. 49, Manish Nagar,<br />Andheri West, Mumbai 400053</span></a></li>
       </ul></div>
     </div>
-    <div className="footer-bottom"><p>© 2026 AVITA TECHNOLOGIES · RDJ &amp; SMK</p><p>IDEAS. ENGINEERING. REAL IMPACT.</p><a className="back-top" href="#home">Back to top<span><ArrowUpRight size={18} aria-hidden="true" /></span></a></div>
+    <div className="footer-bottom"><p>© 2026 AVITA TECHNOLOGIES · RDJ &amp; SMK<span className="footer-version">v{__APP_VERSION__}</span></p><p>IDEAS. ENGINEERING. REAL IMPACT.</p><a className="back-top" href="#home">Back to top<span><ArrowUpRight size={18} aria-hidden="true" /></span></a></div>
   </div></footer>;
 }
 export default function Website() {

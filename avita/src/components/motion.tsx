@@ -80,8 +80,6 @@ export function useScrollMotion(enabled: boolean) {
       if (frame) return;
       frame = requestAnimationFrame(() => {
         frame = 0;
-        const distance = document.documentElement.scrollHeight - innerHeight;
-        root.style.setProperty("--scroll-progress", `${distance > 0 ? scrollY / distance : 0}`);
         parallax.forEach(element => {
           const rect = element.getBoundingClientRect();
           const shift = enabled && innerWidth > 960 ? Math.max(-35, Math.min(35, (innerHeight / 2 - rect.top - rect.height / 2) * .06)) : 0;
